@@ -1,0 +1,63 @@
+# ============================================================
+#  DataPilot AI — .gitignore
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environment (backend)
+backend/venv/
+backend/.venv/
+
+# Database (SQLite dev)
+*.db
+*.db-shm
+*.db-wal
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
+
+# Upload files & scratch
+uploads/
+backend/uploads/
+scratch/
+
+# Environment & Local Test Scripts
+.env
+*.env.local
+qa_*.py
+test_*.py
+!backend/tests/**
+backend/tests/__pycache__/
+backend/execute_exact_schema.py
+backend/fix_neon_schema.py
+backend/test_live_endpoint.py
+backend/verify_auth.py
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
