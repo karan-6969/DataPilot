@@ -64,7 +64,7 @@ async def send_password_reset_email(to_email: str, reset_token: str, user_name: 
     - resend
     - sendgrid
     """
-    reset_url = f"{settings.frontend_base_url.rstrip('/')}/reset-password?token={reset_token}"
+    reset_url = f"{settings.resolved_frontend_base_url.rstrip('/')}/reset-password?token={reset_token}"
     subject = "Reset your DataPilot AI password"
     html_content = generate_reset_email_html(user_name, reset_url)
     provider = (settings.email_provider or "console").lower().strip()

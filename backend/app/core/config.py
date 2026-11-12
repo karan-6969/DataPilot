@@ -85,6 +85,16 @@ class Settings(BaseSettings):
     # Frontend Base URL (used for password reset links)
     frontend_base_url: str = "http://localhost:5173"
 
+    @property
+    def resolved_frontend_base_url(self) -> str:
+        """Resolve deployment frontend URL dynamically in Vercel if not overridden."""
+        if self.frontend_base_url and self.frontend_base_url != "http://localhost:5173":
+            return self.frontend_base_url
+        vercel_url = os.getenv("VERCEL_PROJECT_PRODUCTION_URL") or os.getenv("VERCEL_URL")
+        if vercel_url:
+            return f"https://{vercel_url}"
+        return self.frontend_base_url
+
     # Local Ollama
     ollama_base_url: str = "http://localhost:11434"
     ollama_default_model: str = "llama3.2"
