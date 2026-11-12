@@ -11,12 +11,6 @@
       "entrypoint": "app/main:app"
     }
   },
-  "crons": [
-    {
-      "path": "/api/v1/investigations/cron-worker",
-      "schedule": "* * * * *"
-    }
-  ],
   "rewrites": [
     {
       "source": "/health",

@@ -431,6 +431,10 @@ async def get_investigation(
     """Pure read endpoint. Get detailed investigation report with collaborators."""
     investigation = await assert_investigation_access(investigation_id, current_user, db, min_role="VIEWER")
 
+    # Ensure worker is executing for pending/queued investigations on serverless
+    if investigation.status in ["PENDING", "QUEUED"]:
+        ensure_worker_running(investigation_id)
+
     tasks = await db.execute(
         select(InvestigationTask)
         .where(InvestigationTask.investigation_id == investigation_id)
@@ -644,6 +648,10 @@ async def stream_investigation_events(
 ):
     """Observation-only cursor-based SSE stream using DB-backed event store."""
     investigation = await assert_investigation_access(investigation_id, current_user, db, min_role="VIEWER")
+
+    # Ensure worker is executing for pending/queued investigations on serverless
+    if investigation.status in ["PENDING", "QUEUED"]:
+        ensure_worker_running(investigation_id)
 
     # Determine starting cursor from query param or Last-Event-ID header
     header_last_id = request.headers.get("Last-Event-ID")
